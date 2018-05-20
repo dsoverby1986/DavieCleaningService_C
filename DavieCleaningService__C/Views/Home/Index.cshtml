@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<section id="carousel-section" class="section-global-wrapper">
+    <div class="container-fluid-kamn">
+        <div class="row">
+            <div id="carousel-1" class="carousel slide">
+                <ol class="carousel-indicators visible-lg">
+                    <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-1" data-slide-to="1"></li>
+                    <li data-target="#carousel-1" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="~/assets/img/slider/Office_IT_Support.jpg" height="400" alt="">
+                        <div class="carousel-caption">
+                            <h3 class="carousel-title hidden-xs"><mark style="background-color:rgba(27, 189, 154,.5);color:#ffffff;border-radius: 3px;">COMMERCIAL</mark></h3>
+                            <mark class="carousel-body">We want your business to be our business.</mark>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="~/assets/img/slider/b1.jpg" height="400" alt="">
+                        <div class="carousel-caption">
+                            <h3 class="carousel-title hidden-xs"><mark style="background-color:rgba(27, 189, 154,.5);color:#ffffff;border-radius: 3px;">RESIDENTIAL</mark></h3>
+                            <mark class="carousel-body">Affordable, quality cleaning services just a call away.</mark>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="~/assets/img/slider/shady-oaks-apt-building-2.jpg" height="400" alt="">
+                        <div class="carousel-caption">
+                            <h3 class="carousel-title hidden-xs"><mark style="background-color:rgba(27, 189, 154,.5);color:#ffffff;border-radius: 3px;">PROPERTY MANAGEMENT</mark></h3>
+                            <mark class="carousel-body">Helping you to help others faster and more efficiently.</mark>
+                        </div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#carousel-1" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-1" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="services" class="services-section section-global-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="services-header">
+                <h3 class="services-header-title">We're Here For You.</h3>
+                <p class="services-header-body"><em> A brief overview of our services... </em>  </p><hr>
+            </div>
+        </div>
+        <div class="row services-row services-row-head services-row-1">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="services-group wow animated fadeInLeft" data-wow-offset="40">
+                    <p class="services-icon larger"><span class="fa fa-building-o fa-5x" id="building"></span></p>
+                    <h4 class="services-title">Commercial</h4>
+                    <p class="services-body">Often times, a business doesn't need to hire an in-house janitorial staff to handle the daily cleaning that's required to maintain it's respectable appearance and safe work environment. Contact us today and let us help you meet your goals.</p>
+                    <p class="services-more"><a href="@Url.Action("Contact","Home")">Contact Us</a></p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="services-group wow animated zoomIn" data-wow-offset="40">
+                    <p class="services-icon"><i class="fa fa-home fa-5x"></i></p>
+                    <h4 class="services-title">Residential</h4>
+                    <p class="services-body">Life can be extremely busy and not everyone has the time to stay on top of housework. If you're ready for a break from one of lifes responsibilities, give us a call and let us help you to make your home a happier place to be.</p>
+                    <p class="services-more"><a href="@Url.Action("Contact","Home")">Contact Us</a></p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="services-group wow animated fadeInRight" data-wow-offset="40">
+                    <p class="services-icon"><i class="fa fa-briefcase fa-5x" id="briefcase"></i></p>
+                    <h4 class="services-title">Property Management</h4>
+                    <p class="services-body">At Davie Cleaning Service, we understand the principles of a successful business and we know that in order for your property management business to thrive, you need your properties to be in top-notch shape as quickly as possible. We can help with that.</p>
+                    <p class="services-more"><a href="@Url.Action("Contact","Home")">Contact Us</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+        $(function () {
+            var maxHeight = Math.max.apply(null, $(".services-body").map(function () {
+                return $(this).height();
+            }).get());
+
+            $('.services-body').css('height', maxHeight);
+
+            setTimeout(function () {
+                $('[data-slide="next"]').click();
+            }, 5000);
+        });
+    </script>
+}

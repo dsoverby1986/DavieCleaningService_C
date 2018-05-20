@@ -1,0 +1,208 @@
+﻿@model DavieCleaningService__C.Models.ContactMessage
+@{
+    ViewBag.Title = "Contact";
+}
+<div class="container-fluid-kamn">
+    <div class="row">
+        <div class="row">
+            <div id="googleMap">
+                <br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+                <h4>Find us at:</h4>
+                <h4 class="block-author"> Davie Cleaning Service</h4>
+                <p>126 Ashley Brooke Lane, Mocksville, NC 27028, USA</p>
+                <p class="block-author"><u>Tonya Crouse</u></p>
+                <p>Phone: 1.336.407.7056</p>
+                <em class="">Email: dcstonyacrouse@gmail.com </em> <br>
+                <br />
+                <p class="lead">Social Link</p><hr>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a href="https://www.facebook.com/Davie-Cleaning-Service-147655521945315/" target="_blank"><img src="~/assets/img/social-icons/btn_facebook.png" alt="Facebook"></a>
+                    Like us
+                </div>
+                <br>
+            </div>
+            <div class="col-md-5">
+                <div class="feedback-form">
+
+                    <div id="contact-response"><p>@ViewBag.Messagesent</p></div>
+
+                    @*<form action="@Url.Action("Contact", "Home")" method="post" id="contact-form">*@
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "contactForm" })) { @Html.AntiForgeryToken() }
+                    <fieldset>
+                        <div class="form-group form-group-fullname">
+                            <div class="col-md-6">
+                                <label class="control-label" for="name">NAME *</label>
+                                <input type="text" class="form-control contact-input" name="Name" id="name" placeholder="Enter your name...">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label" for="email">E-MAIL *</label>
+                                <input type="text" class="form-control contact-input" name="FromEmail" id="email" placeholder="Enter your email...">
+                            </div>
+                        </div>
+                        <div class="form-group form-group-email">
+                            <div class="col-md-12">
+                                <label class="control-label" for="subject">SUBJECT *</label>
+                                <input type="text" class="form-control contact-input" name="Subject" id="subject" placeholder="Enter message subject...">
+                            </div>
+                        </div>
+                        <div class="form-group form-group-message">
+                            <div class="col-md-12">
+                                <label class="control-label" for="message">MESSAGE *</label>
+                                <textarea class="form-control contact-input" name="Message" id="message" rows="3" placeholder="Enter your message..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mar-top-15">
+                            <button type="button" id="btn_SendMessage" class="btn btn-primary">Send</button>
+                        </div>
+                    </fieldset>
+                    @*</form>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" id="modal_EmailSuccess">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Message sent</h4>
+            </div>
+            <div class="modal-body">
+                <p>You message has been sent. Thank you very much for contacting us. We always look forward to hearing from our customers!</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" id="modal_EmailFail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Failed to send</h4>
+            </div>
+            <div class="modal-body">
+                <p>You message failed to send. Please review the message inputs to be sure that all necessary information was submitted, and try again.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="http://maps.googleapis.com/maps/api/js?key=@(ViewBag.GoogleMapAPIKey)"></script>
+    <script>
+
+        $('#btn_SendMessage').click(function () {
+            var name = $('#name').val();
+            var subject = $('#subject').val();
+            var msg = $('#message').val();
+            var fromEmail = $('#email').val();
+            var cm = new ContactMessage(name, subject, msg, fromEmail);
+            var params = { message: cm, __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() };
+            var encParams = $.param(params);
+            $.ajax({
+                type: 'POST',
+                url: '@(Url.Action("Contact", "Home"))',
+                data: encParams,
+                success: function (data) {
+                    if (!data.fail) {
+                        $('#modal_EmailSuccess').modal();
+                        $('.contact-input').val('');
+                    }
+                    else
+                        $('#modal_EmailFail').modal();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#modal_EmailFail').modal();
+                }
+            })
+        });
+
+        function ContactMessage(name, subject, message, fromEmail) {
+            this.name = name;
+            this.subject = subject;
+            this.message = message;
+            this.fromEmail = fromEmail;
+        }
+
+    var map;
+    var davieCleaningService = new google.maps.LatLng(35.928790, -80.597634);
+
+    function HomeControl(controlDiv, map) {
+        controlDiv.style.padding = '5px';
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#1BBD9A';
+        controlUI.style.border = '1px solid';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.textAlign = 'center';
+        controlUI.style.marginRight = '15px';
+        controlUI.title = 'Set map to Davie Cleaning Service';
+        controlDiv.appendChild(controlUI);
+        var controlText = document.createElement('div');
+        controlText.style.fontFamily = 'Arial,sans-serif';
+        controlText.style.fontSize = '12px';
+        controlText.style.paddingLeft = '4px';
+        controlText.style.paddingRight = '4px';
+        controlText.style.color = 'white';
+        controlText.innerHTML = '<b>Back To DCS<b>'
+        controlUI.appendChild(controlText);
+
+        google.maps.event.addDomListener(controlUI, 'click', function () {
+            map.setCenter(davieCleaningService);
+            map.setZoom(14);
+        });
+    }
+
+    function initialize() {
+        var mapDiv = document.getElementById('googleMap');
+        var myOptions = {
+            center: davieCleaningService,
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                position: google.maps.ControlPosition.LEFT_BOTTOM
+            }
+        };
+        map = new google.maps.Map(mapDiv, myOptions);
+        var homeControlDiv = document.createElement('div');
+        var homeControl = new HomeControl(homeControlDiv, map);
+        homeControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+
+        var marker = new google.maps.Marker({
+            position: davieCleaningService,
+            title: 'Click to zoom'
+        });
+
+        marker.setMap(map);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: "Davie Cleaning Service"
+        });
+
+        infowindow.open(map, marker);
+
+        google.maps.event.addListener(marker, 'click', function () {
+            map.setZoom(17);
+            map.setCenter(marker.getPosition());
+        });
+
+        google.maps.event.addListener(map, 'center_changed', function () {
+            window.setTimeout(function () {
+                map.panTo(marker.getPosition());
+            }, 180000);
+        });
+    }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        $('body').css('overflow-x', 'hidden');
+    </script>
+}

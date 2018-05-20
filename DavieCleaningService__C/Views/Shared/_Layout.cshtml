@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- meta data & title -->
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Davie Cleaning Service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300">
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/animate.min.css">
+
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="~/assets/ico/Webp.net-resizeimage (11).ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+<body>
+    <nav id="navbar-section" class="navbar navbar-default navbar-static-top navbar-sticky" role="navigation">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand wow fadeInDownBig" href="@Url.Action("Index", "Home")"><img src="~/assets/img/slider/DavieCleaningService.png" width="100" alt="Davie Cleaning Service"></a>
+            </div>
+
+            <div id="navbar-spy" class="collapse navbar-collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav pull-right" id="navitems">
+                    <li class="@IsCurrentPage("Home","Index")" id="navHome">
+                        <a href="@Url.Action("Index", "Home")">Home</a>
+                    </li>
+                    <li class="@IsCurrentPage("Home", "Contact")" id="navContact">
+                        <a href="@Url.Action("Contact","Home")"><span>Contact Us</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3><i class="fa fa-map-marker"></i> Contact Information:</h3>
+                    <p class="footer-contact">
+                        126 Ashley Brook Lane, Mocksville, NC 27028<br><br>
+                        Tonya Crouse - Owner<br> Phone: 1.336.407.7056 Fax: 1.336.751.3700<br>
+                        Email: dcstonyacrouse@gmail.com
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3><i class="fa fa-external-link"></i> Links</h3>
+                    <p> <a href="@Url.Action("Contact","Home")"><i class="fa fa-phone fa-lg"></i> Contact Us...</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h3><i class="fa fa-heart"></i> Socialize</h3>
+                    <div id="social-icons">
+                        <a href="https://www.facebook.com/Davie-Cleaning-Service-147655521945315/" target="_blank" class="btn-group facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div>
+        <div class="copyright text center">
+            <p>&copy; Copyright @DateTime.Now.Year, <a href="#">DAVIE CLEANING SERVICE</a>.</p>
+            <p>Site created by <a href="https://www.linkedin.com/in/shaneoverby/" target="_blank">Shane Overby</a></p>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+    @functions {
+        public string IsCurrentPage(string controller, string action = null)
+        {
+            var values = Request.RequestContext.RouteData.Values;
+            var actualAction = values["action"].ToString();
+            var actualCtrl = values["controller"].ToString();
+            var match = (action != null && actualAction == action) && actualCtrl == controller;
+            return match ? "active" : "";
+        }
+    }
+    <script>
+      new WOW().init();
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
