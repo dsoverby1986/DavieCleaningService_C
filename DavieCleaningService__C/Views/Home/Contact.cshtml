@@ -29,8 +29,6 @@
                 <div class="feedback-form">
 
                     <div id="contact-response"><p>@ViewBag.Messagesent</p></div>
-
-                    @*<form action="@Url.Action("Contact", "Home")" method="post" id="contact-form">*@
                     @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "contactForm" })) { @Html.AntiForgeryToken() }
                     <fieldset>
                         <div class="form-group form-group-fullname">
@@ -59,7 +57,6 @@
                             <button type="button" id="btn_SendMessage" class="btn btn-primary">Send</button>
                         </div>
                     </fieldset>
-                    @*</form>*@
                 </div>
             </div>
         </div>
