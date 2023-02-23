@@ -15,8 +15,8 @@
                 <h4 class="block-author"> Davie Cleaning Service</h4>
                 <p>126 Ashley Brooke Lane, Mocksville, NC 27028, USA</p>
                 <p class="block-author"><u>Tonya Crouse</u></p>
-                <p>Phone: 1.336.407.7056</p>
-                <em class="">Email: dcstonyacrouse@gmail.com </em> <br>
+                <p>Phone: <a href="tel:13364077056">1.336.407.7056</a></p>
+                <em class="">Email: <a href="mailto:dcstonyacrouse@gmail.com">dcstonyacrouse@gmail.com</a> </em> <br>
                 <br />
                 <p class="lead">Social Link</p><hr>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -69,7 +69,7 @@
                 <h4 class="modal-title">Message sent</h4>
             </div>
             <div class="modal-body">
-                <p>You message has been sent. Thank you very much for contacting us. We always look forward to hearing from our customers!</p>
+                <p>Your message has been sent. Thank you very much for contacting us. We always look forward to hearing from our customers!</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">OK</button>
@@ -84,7 +84,7 @@
                 <h4 class="modal-title">Failed to send</h4>
             </div>
             <div class="modal-body">
-                <p>You message failed to send. Please review the message inputs to be sure that all necessary information was submitted, and try again.</p>
+                <p>Your message failed to send. Please review the message inputs to be sure that all necessary information was submitted, and try again.</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">OK</button>
@@ -97,6 +97,8 @@
     <script>
 
         $('#btn_SendMessage').click(function () {
+            var $this = $(this);
+            $this.prop('disabled', true);
             var name = $('#name').val();
             var subject = $('#subject').val();
             var msg = $('#message').val();
@@ -118,6 +120,9 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $('#modal_EmailFail').modal();
+                },
+                complete: function () {
+                    $this.prop('disabled', false);
                 }
             })
         });
